@@ -1,14 +1,14 @@
-const { accessSync, constants, realpathSync } = require('fs');
-const { delimiter, join, dirname } = require('path');
+import { accessSync, constants, realpathSync } from 'fs';
+import { delimiter, join, dirname } from 'path';
 
 function findNpm() {
-  const paths = process.env.PATH.split(delimiter);
+  const paths = process.env.PATH!.split(delimiter);
 
   const dir = paths.find(path => {
     try {
       accessSync(join(path, 'npm'), constants.X_OK);
       return true;
-    } catch(err) {
+    } catch (err) {
       return false;
     }
   });
@@ -28,7 +28,4 @@ function requireNpm() {
   }
 }
 
-/*
- * Exports.
- */
-module.exports = requireNpm();
+export const npm = requireNpm();
